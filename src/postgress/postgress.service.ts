@@ -12,27 +12,28 @@ export class PostgressService {
     private postgressRepository: Repository<Postgress>,
   ) {}
 
-  create(createPostgressDto: CreatePostgressDto) {
-    return 'This action adds a new postgress';
+  async create(createPostgressDto: CreatePostgressDto): Promise<Postgress> {
+    const newPostgress = new Postgress
+    newPostgress.name = createPostgressDto.name;
+    newPostgress.isActive = createPostgressDto.isActive;
+    return this.postgressRepository.save(newPostgress)
   }
-
-  // findAll() {
-  //   return `This action returns all postgress`;
-  // }
 
   async findAll(): Promise<Postgress[]> {
-    return this.postgressRepository.find()
+    return this.postgressRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} postgress`;
-  }
+  async findOne(id: number): Promise<Postgress> {
+    return this.postgressRepository.findOneBy({
+      id: id,
+    });
+  }s
 
   update(id: number, updatePostgressDto: UpdatePostgressDto) {
-    return `This action updates a #${id} postgress`;
+    return this.postgressRepository.update(id, updatePostgressDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} postgress`;
+    return this.postgressRepository.delete(id);
   }
 }

@@ -1,1 +1,4 @@
-export class CreatePostgressDto {}
+export class CreatePostgressDto {
+  name: string;
+  isActive: boolean;
+}
