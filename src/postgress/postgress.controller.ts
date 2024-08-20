@@ -13,11 +13,6 @@ export class PostgressController {
     return this.postgressService.create(createPostgressDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.postgressService.findAll();
-  // }
-
   @Get()
   findAll(): Promise<Postgress[]> {
     return this.postgressService.findAll();
