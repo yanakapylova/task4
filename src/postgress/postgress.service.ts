@@ -1,9 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostgressDto } from './dto/create-postgress.dto';
 import { UpdatePostgressDto } from './dto/update-postgress.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Postgress } from './entities/postgress.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
 export class PostgressService {
@@ -13,10 +18,10 @@ export class PostgressService {
   ) {}
 
   async create(createPostgressDto: CreatePostgressDto): Promise<Postgress> {
-    const newPostgress = new Postgress
+    const newPostgress = new Postgress();
     newPostgress.name = createPostgressDto.name;
     newPostgress.isActive = createPostgressDto.isActive;
-    return this.postgressRepository.save(newPostgress)
+    return this.postgressRepository.save(newPostgress);
   }
 
   async findAll(): Promise<Postgress[]> {
@@ -24,16 +29,36 @@ export class PostgressService {
   }
 
   async findOne(id: number): Promise<Postgress> {
-    return this.postgressRepository.findOneBy({
-      id: id,
-    });
-  }s
-
-  update(id: number, updatePostgressDto: UpdatePostgressDto) {
-    return this.postgressRepository.update(id, updatePostgressDto);
+    const result = await this.postgressRepository.findOneBy({ id });
+    if (!result) {
+      throw new HttpException(`Пользователь с ID ${id} не найден`, 400)
+    }
+    return result;
   }
 
-  remove(id: number) {
-    return this.postgressRepository.delete(id);
+  async update(
+    id: number,
+    updatePostgressDto: UpdatePostgressDto,
+  ): Promise<void> {
+    if (!id) {
+      throw new HttpException('Invalid Info', 400);
+    }
+    const result = await this.postgressRepository.update(
+      id,
+      updatePostgressDto,
+    );
+    if (result.affected === 0) {
+      throw new HttpException(`Пользователь с ID ${id} не найден`, 400);
+    }
+  }
+
+  async remove(id: number): Promise<void> {
+    if (!id) {
+      throw new HttpException('Invalid Info', 400);
+    }
+    const result: DeleteResult = await this.postgressRepository.delete(id);
+    if (result.affected === 0) {
+      throw new HttpException(`Пользователь с ID ${id} не найден`, 400);
+    }
   }
 }
