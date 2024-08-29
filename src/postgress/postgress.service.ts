@@ -39,7 +39,7 @@ export class PostgressService {
   async update(
     id: number,
     updatePostgressDto: UpdatePostgressDto,
-  ): Promise<void> {
+  ): Promise<Postgress> {
     if (!id) {
       throw new HttpException('Invalid Info', 400);
     }
@@ -50,6 +50,7 @@ export class PostgressService {
     if (result.affected === 0) {
       throw new HttpException(`Пользователь с ID ${id} не найден`, 400);
     }
+    return this.postgressRepository.findOneBy({ id });
   }
 
   async remove(id: number): Promise<void> {
