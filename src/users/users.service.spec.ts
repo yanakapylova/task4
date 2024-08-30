@@ -11,6 +11,7 @@ describe('UsersService', () => {
   let user = {
     login: 'yana',
     password: 'qwerty',
+    email: 'yana2610@gmail.com'
   };
 
   beforeEach(async () => {

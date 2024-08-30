@@ -11,28 +11,28 @@ export class User {
     example: '66b49b8b23fdb2167f34d0f1',
   })
   @Prop()
-  id: String;
+  id: string;
 
   @ApiProperty({
     description: "the user's login",
     example: 'Yana2610',
   })
   @Prop()
-  login: String;
+  login: string;
 
   @ApiProperty({
     description: "the user's email",
     example: 'Yana2610',
   })
   @Prop()
-  email: String;
+  email: string;
 
   @ApiProperty({
     description: "the user's login",
     example: 'qwerty',
   })
   @Prop()
-  password: String;
+  password: string;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(User);
