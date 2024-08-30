@@ -21,6 +21,13 @@ export class User {
   login: String;
 
   @ApiProperty({
+    description: "the user's email",
+    example: 'Yana2610',
+  })
+  @Prop()
+  email: String;
+
+  @ApiProperty({
     description: "the user's login",
     example: 'qwerty',
   })

@@ -16,6 +16,12 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @ApiOperation({description: "create test users"})
+  @Post("test")
+  createTest() {
+    return this.usersService.createTest();
+  }
+
   @ApiOperation({description: "get an array of all users"})
   @UseGuards(AuthGuard)
   @Get()
@@ -29,11 +35,6 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(id, updateUserDto);
-  // }
-
   @ApiOperation({description: "update a user by id"})
   @Put(':id')
   fullUpdate(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
@@ -42,7 +43,13 @@ export class UsersController {
 
   @ApiOperation({description: "delete a user by id"})
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
+  remove(@Param('id') id: string): Promise<User> {
     return this.usersService.remove(id);
+  }
+
+  @ApiOperation({description: "delete all database"})
+  @Delete()
+  removeAll(): Promise<String> {
+    return this.usersService.removeAll();
   }
 }

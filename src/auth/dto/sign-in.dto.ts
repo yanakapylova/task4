@@ -8,6 +8,12 @@ export class SignInUserDto {
   login: string;
 
   @ApiProperty({
+    description: "user's email",
+    example: 'yana261099@gmail.com',
+  })
+  email: string;
+
+  @ApiProperty({
     description: "user's password",
     example: 'qwerty',
   })
