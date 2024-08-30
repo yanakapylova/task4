@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PostgressModule } from './postgress/postgress.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Postgress } from './postgress/entities/postgress.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { Postgress } from './postgress/entities/postgress.entity';
       synchronize: true,
       autoLoadEntities: true,
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

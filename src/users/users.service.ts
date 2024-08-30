@@ -13,6 +13,7 @@ export class UsersService {
     private userModel: Model<User>,
   ) {}
 
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const newUser = new this.userModel(createUserDto);
     return newUser.save();
@@ -24,6 +25,11 @@ export class UsersService {
 
   async findOne(id: string): Promise<User> {
     return this.userModel.findById(id);
+  }
+
+  async findOneByName(login: string): Promise<User | undefined> {
+    const users = await this.userModel.find()
+    return users.find((user) => user.login === login);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
